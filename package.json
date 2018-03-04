@@ -8,7 +8,7 @@
     "server": "nodemon index.js",
     "client": "npm run start --prefix client",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
-    "test": "NODE_ENV=test mocha"
+    "test": "NODE_ENV=test mocha --recursive --exit"
   },
   "repository": {
     "type": "git",
