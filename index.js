@@ -1,6 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const common = require('./common');
+const common = require('./config/common');
 const config = common.config();
 
 mongoose.connect(config.mongoURI);
