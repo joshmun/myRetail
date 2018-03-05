@@ -8,14 +8,7 @@ router.get('/', function(req, res){
 });
 
 router.get('/:id', (req, res) => {
-  res.json({
-    name: "Movie",
-    current_price: {
-      value: 5,
-      currency: "USD"
-    },
-    createdAt: "March 5, 2018"
-  });
+  res.send("waddup");
 })
 
 module.exports = router;
