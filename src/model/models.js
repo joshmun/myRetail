@@ -12,7 +12,16 @@ const ProductSchema = new Schema({
   current_price : {
     value         : { type: Number, required: true },
     currency_code : { type: String, required: true }
-   }
+  },
+  createdAt: { type: Date, default: Date.now },
+});
+
+ProductSchema.pre('save', next => {
+  let now = new Date();
+  if(!this.createdAt) {
+    this.createdAt = now;
+  }
+  next();
 });
 
 const Product = mongoose.model('products', ProductSchema);

@@ -7,9 +7,16 @@ mongoose.connect(config.mongoURI);
 
 const app = express();
 
+// routes
+const products = require('./src/routes/products');
+
 app.get('/', (req, res) => {
-  res.send("hello world");
+  res.send({json: 'data'});
 });
 
+app.use('/products', products);
+
 const PORT = process.env.PORT || 5000;
-app.listen(PORT);
+const server = app.listen(PORT);
+
+module.exports = server;
