@@ -1,12 +1,13 @@
-const mongoose = require('mongoose'),
-  Schema = mongoose.Schema,
-  ObjectId = Schema.ObjectId;
+const mongoose = require('mongoose');
+const { Schema } = mongoose;
+const ObjectId = Schema.ObjectId;
 const common = require('../../config/common');
 const config = common.config();
 
 mongoose.connect(config.mongoURI);
 
 const ProductSchema = new Schema({
+  _id           : { type: Number, required: true },
   name          : { type: String, required: true },
   current_price : {
     value         : { type: Number, required: true },
@@ -14,6 +15,6 @@ const ProductSchema = new Schema({
    }
 });
 
-const Product = mongoose.model('Product', ProductSchema);
+const Product = mongoose.model('products', ProductSchema);
 
 module.exports = Product;
