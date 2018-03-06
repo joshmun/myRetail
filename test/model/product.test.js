@@ -1,40 +1,12 @@
 const mongoose = require('mongoose');
-const common = require('../../config/common');
-const config = common.config();
-
-mongoose.connect(config.mongoURI, function(err){
-  console.log(err);
-});
 const db = mongoose.connection;
 const Product = require('../../src/model/models');
 const expect = require('chai').expect;
-//
-
-// const Product = mongoose.model('products');
-// console.log(Product);
-
-// const counters = db.collection("counters");
-// const products = db.collection("products");
-
-// console.log(db.listCollections());
-
-// counters.insertOne({_id:"productid", sequence_value:0});
-//
-// function getNextSequenceValue(sequenceName){
-//   let sequenceDocument = counters.findAndModify({
-//     query: { _id: sequenceName },
-//     update: {$inc: {sequence_value: 1}},
-//     new: true
-//   });
-//   return sequenceDocument;
-// }
-
 
 describe('Product', function() {
-
   it('saves successfully with valid input', function(done){
     const p = new Product({
-                // _id: getNextSequenceValue("productid"),
+                _id: new mongoose.Types.ObjectId(),
                 name: 'Movie',
                 current_price: {
                   value: 13.49,
@@ -44,6 +16,7 @@ describe('Product', function() {
     p.save(function(err) {
       expect(err.errors).to.not.exist;
     })
+    Product.findByIdAndRemove(p._id);
     done();
   });
 
@@ -128,8 +101,4 @@ describe('Product', function() {
       done();
     });
   })
-
-  // db.dropDatabase(function(err){
-  //   if(err) return done(err);
-  // });
 });
