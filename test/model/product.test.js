@@ -6,7 +6,6 @@ const expect = require('chai').expect;
 describe('Product', function() {
   it('saves successfully with valid input', function(done){
     const p = new Product({
-                _id: new mongoose.Types.ObjectId(),
                 name: 'Movie',
                 current_price: {
                   value: 13.49,

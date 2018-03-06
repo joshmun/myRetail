@@ -9,8 +9,11 @@ const products = require('../../src/routes/products');
 const server = require('../../index.js');
 const Product = require('../../src/model/models');
 
+const db = mongoose.connection
+const prd = db.collection("products")
+console.log(Product.collection)
+
 const p = new Product({
-  _id: new mongoose.Types.ObjectId(),
   name: "movie",
   current_price: {
     value: 123,
