@@ -8,15 +8,14 @@ let should = chai.should();
 const products = require('../../src/routes/products');
 const server = require('../../index.js');
 const Product = require('../../src/model/product-model');
-
 const db = mongoose.connection
-let myId;
-let postId;
 
 chai.use(chaiHttp);
 
 describe("Products Controller", function(){
+  let postId;
   describe("#GET requests", function(){
+    let myId;
     before(()=>{
       const p = new Product({
         name: "movie",
