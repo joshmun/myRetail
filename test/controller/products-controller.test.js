@@ -7,7 +7,7 @@ const expect = chai.expect;
 let should = chai.should();
 const products = require('../../src/routes/products');
 const server = require('../../index.js');
-const Product = require('../../src/model/models');
+const Product = require('../../src/model/product-model');
 
 const db = mongoose.connection
 let myId;

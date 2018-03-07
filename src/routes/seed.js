@@ -3,7 +3,7 @@
 const express = require('express');
 const router = express.Router();
 const seed = require('../db/seed');
-const Product = require('../model/models');
+const Product = require('../model/product-model');
 
 router.get('/', (req, res) => {
   seed.seed(res);

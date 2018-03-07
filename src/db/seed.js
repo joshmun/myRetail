@@ -3,7 +3,7 @@ const common = require('../../config/common');
 const config = common.config();
 mongoose.connect(config.mongoURI);
 const db = mongoose.connection;
-const Product = require('../model/models');
+const Product = require('../model/product-model');
 const faker = require('faker');
 
 module.exports = {

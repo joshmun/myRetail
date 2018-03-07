@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const db = mongoose.connection;
-const Product = require('../../src/model/models');
+const Product = require('../../src/model/product-model');
 const expect = require('chai').expect;
 describe('Product', function() {
   it('should be valid with correct input', function(done){
@@ -16,20 +16,6 @@ describe('Product', function() {
     })
     done();
   });
-
-  // it('should have validation error when name is Number, value is String, and currency_code is Boolean', function(done){
-  //   const p = new Product({
-  //               name: 1234,
-  //               current_price: {
-  //                 value: 'whatever',
-  //                 currency_code: true
-  //                 }
-  //               });
-  //   p.validate(function(err) {
-  //     expect(err.errors).to.exist;
-  //   });
-  //   done();
-  // });
 
   describe('#name', function() {
     it('should be valid when name is Movie', function(done){
