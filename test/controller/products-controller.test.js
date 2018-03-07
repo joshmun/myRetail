@@ -10,28 +10,44 @@ const server = require('../../index.js');
 const Product = require('../../src/model/models');
 
 const db = mongoose.connection
-const prd = db.collection("products")
-console.log(Product.collection)
-
-const p = new Product({
-  name: "movie",
-  current_price: {
-    value: 123,
-    currency_code: "USD"
-  }
-})
+let myId;
 
 chai.use(chaiHttp);
 
 describe("Products controller", function(){
+  before(()=>{
+    const p = new Product({
+      name: "movie",
+      current_price: {
+        value: 123,
+        currency_code: "USD"
+      }
+    })
+    myId = p.id;
+    p.save()
+  });
+
+  after(()=>{
+    Product.findByIdAndRemove(myId).exec();
+  });
+
+  describe("#GET /products", function(){
+    it("returns status code 200", function(done){
+      chai.request(server)
+      .get('/products')
+      .end((err, res) => {
+        res.should.have.status(200);
+        done();
+      });
+    });
+  });
+
   describe("#GET /products/:id", function(){
     it("returns status code 200", function(done){
-      p.save()
       chai.request(server)
-        .get(`/products/${p._id}`)
+        .get(`/products/${myId}`)
         .end((err, res) => {
           res.should.have.status(200);
-          Product.findByIdAndRemove(p.id);
           done();
         });
     });
@@ -55,9 +71,8 @@ describe("Products controller", function(){
     });
 
     it("returns a Product object", (done) => {
-      p.save()
       chai.request(server)
-      .get(`/products/${p._id}`)
+      .get(`/products/${myId}`)
       .end((err, res) => {
         res.body.should.have.property('name');
         res.body.should.have.property('current_price');
@@ -67,6 +82,5 @@ describe("Products controller", function(){
         done();
       });
     });
-
   });
 });

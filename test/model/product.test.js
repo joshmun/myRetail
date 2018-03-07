@@ -2,9 +2,8 @@ const mongoose = require('mongoose');
 const db = mongoose.connection;
 const Product = require('../../src/model/models');
 const expect = require('chai').expect;
-
 describe('Product', function() {
-  it('saves successfully with valid input', function(done){
+  it('should be valid with correct input', function(done){
     const p = new Product({
                 name: 'Movie',
                 current_price: {
@@ -12,26 +11,25 @@ describe('Product', function() {
                   currency_code: 'USD'
                   }
                 });
-    p.save(function(err) {
+    p.validate(function(err) {
       expect(err.errors).to.not.exist;
     })
-    Product.findByIdAndRemove(p._id);
     done();
   });
 
-  it('saves unsuccessfully with invalid input', function(done){
-    const p = new Product({
-                name: 1234,
-                current_price: {
-                  value: 'whatever',
-                  currency_code: true
-                  }
-                });
-    p.save(function(err) {
-      expect(err.errors).to.exist;
-    });
-    done();
-  });
+  // it('should have validation error when name is Number, value is String, and currency_code is Boolean', function(done){
+  //   const p = new Product({
+  //               name: 1234,
+  //               current_price: {
+  //                 value: 'whatever',
+  //                 currency_code: true
+  //                 }
+  //               });
+  //   p.validate(function(err) {
+  //     expect(err.errors).to.exist;
+  //   });
+  //   done();
+  // });
 
   describe('#name', function() {
     it('should be valid when name is Movie', function(done){
@@ -52,7 +50,7 @@ describe('Product', function() {
 
     it('should be invalid when name is numbers 123', function(done){
       const p = new Product({ name: 123 });
-      p.save(function(err) {
+      p.validate(function(err) {
         expect(err.errors.name).to.exist;
       });
       done();
@@ -78,7 +76,7 @@ describe('Product', function() {
 
     it('should be invalid when value is a string', function(done){
       const p = new Product({ value: '13.49' });
-      p.save(function(err) {
+      p.validate(function(err) {
         expect(err.errors.value).to.exist;
       });
       done();
