@@ -13,23 +13,24 @@ router.get('/drop', (req, res) => {
   seed.drop(res);
 });
 
-// GET all
-router.get('/product', (req,res) => {
-  seed.getProduct(res);
-});
-
-//  GET /product/{id}
-router.get('/product/:id', (req,res) => {
-  seed.getProductById(res, req.params.id);
-});
-
-// POST
-router.post('/product', (req,res) => {
-  seed.postProduct(res);
-});
-
-router.delete('/product/:id', (req,res) => {
-  seed.deleteProduct(res, req.params.id);
-});
+// // GET all
+// router.get('/product', (req,res) => {
+//   seed.getProduct(res);
+// });
+//
+// //  GET /product/{id}
+// router.get('/product/:id', (req,res) => {
+//   seed.getProductById(res, req.params.id);
+// });
+//
+// // POST creates new product
+// router.post('/product', (req,res) => {
+//   seed.postProduct(res);
+// });
+//
+// // DELETE product at id
+// router.delete('/product/:id', (req,res) => {
+//   seed.deleteProduct(res, req.params.id);
+// });
 
 module.exports = router;

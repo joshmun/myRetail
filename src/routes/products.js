@@ -1,26 +1,28 @@
 // Products route module
 
-const express = require('express');
-const router = express.Router();
-const Product = require('../model/product-model');
+const router = require('express').Router();
+// const router = express.Router();
+const products = require('../services/products');
 
-router.get('/', function(req, res){
-  res.send("Welcome to the products page");
+
+// GET all
+router.get('/', (req,res) => {
+  products.getProduct(res);
 });
 
-router.get('/:id', (req, res) => {
-  Product.findById(req.params.id, (err, product) => {
-    if(!product){
-      res.status(404)
-      res.json({
-        success: false,
-        message: `Cannot find product with ID: ${req.params.id}`
-      })
-      res.end()
-      return
-    }
-    res.send(product);
-  });
-})
+//  GET /product/{id}
+router.get('/:id', (req,res) => {
+  products.getProductById(res, req.params.id);
+});
+
+// POST creates new product
+router.post('/', (req,res) => {
+  products.postProduct(res);
+});
+
+// DELETE product at id
+router.delete('/:id', (req,res) => {
+  products.deleteProduct(res, req.params.id);
+});
 
 module.exports = router;

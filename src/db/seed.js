@@ -18,12 +18,9 @@ module.exports = {
         });
       p.save((err, product)=> {
         if(err) return res.status(500).send(err);
-        const response = {
-          message: "Db seeded!"
-        }
-        return res.status(200).send(response)
       });
     }
+    return res.status(200).json({message: "Db seeded!"})
   },
   drop: (res)=>{
     db.dropDatabase((err)=>{
@@ -33,42 +30,5 @@ module.exports = {
       }
       return res.status(200).send(response)
     });
-  },
-
-  getProductById: (res, id) => {
-    let p;
-    Product.findById(id, (err, product) => {
-      if (err) return res.status(404).send(err);
-        p = product;
-    return res.status(200).json(p)
-  })
-},
-
-  postProduct: (res)=>{
-    const p = new Product({
-      name: faker.commerce.productName(),
-      current_price: {
-        value: faker.finance.amount(),
-        currency_code: "USD"
-        },
-      });
-    p.save();
-    res.json(p);
-  },
-
-  getProduct: (res)=>{
-    Product.find((err, product)=> {
-      if (err) return res.status(500).send(err);
-      res.json(product);
-    })
-  },
-
-  deleteProduct: (res, id)=>{
-    Product.findByIdAndRemove(id, (err, product)=>{
-      if(err) return res.status(500).send(err);
-    })
-    return res.status(200).json({message: `Product ${id} was successfully removed.`})
   }
-
-
 }

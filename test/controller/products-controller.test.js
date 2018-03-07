@@ -63,7 +63,7 @@ describe("Products controller", function(){
 
     it("returns JSON product data", (done) => {
       chai.request(server)
-      .get('/products/5')
+      .get(`/products/${myId}`)
       .end((err, res) => {
         res.body.should.be.a('object');
         done();
