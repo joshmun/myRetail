@@ -16,17 +16,17 @@ module.exports = {
   })
 },
 
-  postProduct: (res)=>{
-    const p = new Product({
-      name: faker.commerce.productName(),
-      current_price: {
-        value: faker.finance.amount(),
-        currency_code: "USD"
-        },
-      });
-    p.save();
-    res.status(201).json(p);
-  },
+  // postProduct: (res)=>{
+  //   const p = new Product({
+  //     product_id: faker.commerce.productName(),
+  //     current_price: {
+  //       value: faker.finance.amount(),
+  //       currency_code: "USD"
+  //       },
+  //     });
+  //   p.save();
+  //   res.status(201).json(p);
+  // },
 
   getProduct: (res)=>{
     Product.find((err, product)=> {

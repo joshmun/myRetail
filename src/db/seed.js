@@ -10,7 +10,7 @@ module.exports = {
   seed: (res)=>{
     for (let i=1; i<11; i++){
       const p = new Product({
-        name: faker.commerce.productName(),
+        product_id: (i*10000+5555),
         current_price: {
           value: faker.finance.amount(),
           currency_code: "USD"

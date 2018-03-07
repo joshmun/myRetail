@@ -7,7 +7,7 @@ const config = common.config();
 mongoose.connect(config.mongoURI);
 
 const ProductSchema = new Schema({
-  name          : { type: String, required: true },
+  product_id    : { type: Number, unique: true, required: true },
   current_price : {
     value         : { type: Number, required: true },
     currency_code : { type: String, required: true }
