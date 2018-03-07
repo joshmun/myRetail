@@ -1,16 +1,12 @@
-// Products route module
-
 const router = require('express').Router();
-// const router = express.Router();
 const products = require('../services/products');
-
 
 // GET all
 router.get('/', (req,res) => {
   products.getProduct(res);
 });
 
-//  GET /product/{id}
+//  GET /products/:id
 router.get('/:id', (req,res) => {
   products.getProductById(res, req.params.id);
 });
@@ -20,7 +16,7 @@ router.post('/', (req,res) => {
   products.postProduct(res);
 });
 
-// DELETE product at id
+// DELETE /products/:id
 router.delete('/:id', (req,res) => {
   products.deleteProduct(res, req.params.id);
 });

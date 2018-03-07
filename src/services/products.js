@@ -25,7 +25,7 @@ module.exports = {
         },
       });
     p.save();
-    res.json(p);
+    res.status(201).json(p);
   },
 
   getProduct: (res)=>{
