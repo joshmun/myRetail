@@ -42,8 +42,7 @@ describe("Products Controller", function(){
         });
       });
 
-      it("returns a collection of products", function(){
-      });
+      it("returns a collection of products");
     });
 
     describe("/products/:id", function(){
@@ -110,5 +109,10 @@ describe("Products Controller", function(){
         done()
       });
     });
+  });
+
+  describe("#PUT /products/:id", ()=>{
+    it("returns status code 200"
+    );
   });
 });
