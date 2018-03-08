@@ -9,10 +9,8 @@ const productHelper = new ProductHelpers();
 
 //  GET /products/:id
 router.get('/:id', (req,res) => {
-  console.log("HIT THE ROUTE")
   productHelper.getProductName(res, req.params.id)
   .then((productName)=>{
-    // console.log(productName);
     return productHelper.getProductPrice(productName)
   })
   .then((productData)=>{
