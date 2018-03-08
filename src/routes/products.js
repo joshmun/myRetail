@@ -23,10 +23,15 @@ router.get('/:id', (req,res) => {
 
 router.put('/:id', (req, res) => {
   let id = req.params.id;
-  let updatedPrice = req.query;
+  let queryPrice = req.query;
+  queryPrice.value = Number(queryPrice.value)
+  let updatedPrice = queryPrice
   productHelper.putProductPrice(id, updatedPrice)
-  .then((response)=>{
-    res.status(200).json(response);
+  .then((updatedProduct)=>{
+    res.status(200).json(updatedProduct);
+    return productHelper.updateProductPrice(product)
+  }, (error)=>{
+    res.status(400).json(error);
   })
 })
 

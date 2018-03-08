@@ -25,7 +25,7 @@ class ProductHelpers{
     getProductPrice(productName){
       let productPrice;
       return new Promise(function(resolve, reject){
-        Product.find({ 'product_id': productName.product_id }, (err, product) => {
+        Product.findOne({ 'product_id': productName.product_id }, (err, product) => {
           if (err) return err;
           productPrice = product[0];
           productName['current_price'] = productPrice.current_price;
@@ -36,48 +36,64 @@ class ProductHelpers{
 
     putProductPrice(id, updatedPrice){
       return new Promise(function(resolve, reject){
-        Product.findOneAndUpdate({ 'product_id': id}, { 'current_price': updatedPrice }, (err, product) =>{
-          if(err) {
-            console.log(err)
-            let message = {
-              id: id,
-              error: `Sorry, we could not find any product with id: ${id}.`
-            }
-            resolve(message);
+        Product.find({ product_id: id}, (err, product)=>{
+          if (product.length < 1){
+            reject(
+              {
+                  id: id,
+                  error: 'Sorry, we could not find this product.'
+              }
+            )
           }
           else{
-            let message = {
-              id: id,
-              message: `Successfully updated price to ${updatedPrice.value}`
-            }
-            resolve(message);
+            product = product[0];
+            product.current_price = updatedPrice;
+            product.save((err, updatedProduct)=>{
+              // resolve(updatedProduct);
+              resolve({
+                id: updatedProduct.product_id,
+                message: "Succesfully updated!"
+              })
+            })
           }
         })
+        // Product.findOneAndUpdate({ product_id: id}, {$set: {current_price: updatedPrice }}, (err, product) =>{
+        //   if(err) {
+        //     console.log(err)
+        //     let message = {
+        //       id: id,
+        //       error: `Sorry, we could not find any product with id: ${id}.`
+        //     }
+        //     resolve(message);
+        //   }
+        //   else{
+        //     let message = {
+        //       id: id,
+        //       message: `Successfully updated price to ${updatedPrice.value}`
+        //     }
+        //     resolve(message);
+        //   }
+        // })
       })
-      // let message;
-      // let response = Product.findOneAndUpdate({ 'product_id': id}, { 'current_price': updatedPrice }, (err, product) =>{
-      //   if(err) {
-      //     console.log(err)
-      //     message = {
-      //       id: id,
-      //       error: `Sorry, we could not find any product with id: ${id}.`
-      //     }
-      //     return message;
-      //   }
-      //   else{
-      //     message = {
-      //       id: id,
-      //       message: `Successfully updated price to ${updatedPrice.value}`
-      //     }
-      //     console.log("hit this block")
-      //   }
-      //   console.log("ready to return?")
-      //   console.log(message)
-      //   return message
-      // });
-      // console.log(response)
-      // return response;
     }
+
+    // updateProductPrice(product, updatedPrice){
+    //   console.log(updatedPrice)
+    //   return new Promise((resolve, reject) => {
+    //     product.update({current_price: updatedPrice }, (err, product)=>{
+    //       if(err){
+    //         resolve(err)
+    //       }
+    //       else {
+    //         resolve(
+    //           {
+    //             message: `Successfully updated price to ${updatedPrice.value}`
+    //           }
+    //         )
+    //       }
+    //     })
+    //   })
+    // }
 }
 
 module.exports = ProductHelpers;
