@@ -5,40 +5,74 @@ mongoose.connect(config.mongoURI);
 const db = mongoose.connection;
 const Product = require('../model/product-model');
 const faker = require('faker');
+const axios = require('axios');
 
-module.exports = {
-  getProductById: (res, id) => {
-    let p;
-    Product.findById(id, (err, product) => {
-      if (err) return res.status(404).send(err);
-        p = product;
-    return res.status(200).json(p)
-  })
-},
+class ProductHelpers{
+    getProductName(res, id) {
+      let productName;
+      return new Promise(function(resolve, reject){
+          axios.get(`http://redsky.target.com/v2/pdp/tcin/${id}?excludes=taxonomy,price,promotion,bulk_ship,rating_and_review_reviews,rating_and_review_statistics,question_answer_statistics`)
+          .then((response)=>{
+            productName = response.data.product.item.product_description.title
+            resolve({
+              'product_id': id,
+              'name': productName
+            })
+          })
+          .catch((error)=>{
+            reject({
+              id: id,
+              error: `Sorry, redsky didn't respond with product data with this id.`
+            })
+          })
+        })
+    }
 
-  postProduct: (res)=>{
-    const p = new Product({
-      name: faker.commerce.productName(),
-      current_price: {
-        value: faker.finance.amount(),
-        currency_code: "USD"
-        },
-      });
-    p.save();
-    res.status(201).json(p);
-  },
+    getProductPrice(productName, id){
+      let productPrice;
+      return new Promise(function(resolve, reject){
+        Product.find({ 'product_id': productName.product_id }, (err, product) => {
+          if (product.length < 1){
+            reject(
+              {
+                id: id,
+                error: 'Sorry, we could not find this product.'
+              })
+          }
+          else {
+          productPrice = product[0];
+          productName['current_price'] = productPrice.current_price;
+          resolve(productName)
+          }
+        });
+      })
+    }
 
-  getProduct: (res)=>{
-    Product.find((err, product)=> {
-      if (err) return res.status(500).send(err);
-      res.json(product);
-    })
-  },
-
-  deleteProduct: (res, id)=>{
-    Product.findByIdAndRemove(id, (err, product)=>{
-      if(err) return res.status(500).send(err);
-    })
-    return res.status(200).json({message: `Product ${id} was successfully removed.`})
-  }
+    putProductPrice(id, updatedPrice){
+      return new Promise(function(resolve, reject){
+        Product.find({ product_id: id}, (err, product)=>{
+          if (product.length < 1){
+            reject(Error(
+              {
+                  id: id,
+                  error: 'Sorry, we could not find this product.'
+              })
+            )
+          }
+          else{
+            product = product[0];
+            product.current_price = updatedPrice;
+            product.save((err, updatedProduct)=>{
+              // resolve(updatedProduct);
+              resolve({
+                id: updatedProduct.product_id,
+                message: "Succesfully updated!"
+              })
+            })
+          }
+        })
+      })
+    }
 }
+
+module.exports = ProductHelpers;
