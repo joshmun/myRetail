@@ -13,24 +13,22 @@ class ProductHelpers{
       return new Promise(function(resolve, reject){
           axios.get(`http://redsky.target.com/v2/pdp/tcin/${id}?excludes=taxonomy,price,promotion,bulk_ship,rating_and_review_reviews,rating_and_review_statistics,question_answer_statistics`)
           .then((response)=>{
-            if(response.data.product.item.length < 1){
-              reject(
-                {
-                  id: id,
-                  error: "Sorry, redsky didn't respond with product data with this id."
-                }
-              )
-            }
             productName = response.data.product.item.product_description.title
             resolve({
               'product_id': id,
               'name': productName
             })
           })
+          .catch((error)=>{
+            reject({
+              id: id,
+              error: `Sorry, redsky didn't respond with product data with this id.`
+            })
+          })
         })
     }
 
-    getProductPrice(productName){
+    getProductPrice(productName, id){
       let productPrice;
       return new Promise(function(resolve, reject){
         Product.find({ 'product_id': productName.product_id }, (err, product) => {
@@ -39,12 +37,13 @@ class ProductHelpers{
               {
                 id: id,
                 error: 'Sorry, we could not find this product.'
-              }
-            )
+              })
           }
+          else {
           productPrice = product[0];
           productName['current_price'] = productPrice.current_price;
           resolve(productName)
+          }
         });
       })
     }
@@ -53,11 +52,11 @@ class ProductHelpers{
       return new Promise(function(resolve, reject){
         Product.find({ product_id: id}, (err, product)=>{
           if (product.length < 1){
-            reject(
+            reject(Error(
               {
                   id: id,
                   error: 'Sorry, we could not find this product.'
-              }
+              })
             )
           }
           else{

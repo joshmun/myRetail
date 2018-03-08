@@ -2,23 +2,18 @@ const router = require('express').Router();
 const ProductHelpers = require('../services/products');
 const productHelper = new ProductHelpers();
 
-// // GET all
-// router.get('/', (req,res) => {
-//   products.getProduct(res);
-// });
-
 //  GET /products/:id
 router.get('/:id', (req,res) => {
   productHelper.getProductName(res, req.params.id)
   .then((productName)=>{
-    return productHelper.getProductPrice(productName)
+    return productHelper.getProductPrice(productName, req.params.id)
   }, (error)=>{
-    res.status(404).json(error);
+    res.status(404).send(error);
   })
   .then((productData)=>{
     res.json(productData)
   }, (error)=>{
-    res.status(404).json(error);
+    res.status(404).send(error);
   })
 });
 
