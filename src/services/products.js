@@ -71,71 +71,8 @@ class ProductHelpers{
             })
           }
         })
-        // Product.findOneAndUpdate({ product_id: id}, {$set: {current_price: updatedPrice }}, (err, product) =>{
-        //   if(err) {
-        //     console.log(err)
-        //     let message = {
-        //       id: id,
-        //       error: `Sorry, we could not find any product with id: ${id}.`
-        //     }
-        //     resolve(message);
-        //   }
-        //   else{
-        //     let message = {
-        //       id: id,
-        //       message: `Successfully updated price to ${updatedPrice.value}`
-        //     }
-        //     resolve(message);
-        //   }
-        // })
       })
     }
-
-    // updateProductPrice(product, updatedPrice){
-    //   console.log(updatedPrice)
-    //   return new Promise((resolve, reject) => {
-    //     product.update({current_price: updatedPrice }, (err, product)=>{
-    //       if(err){
-    //         resolve(err)
-    //       }
-    //       else {
-    //         resolve(
-    //           {
-    //             message: `Successfully updated price to ${updatedPrice.value}`
-    //           }
-    //         )
-    //       }
-    //     })
-    //   })
-    // }
 }
 
 module.exports = ProductHelpers;
-
-//
-//   // postProduct: (res)=>{
-//   //   const p = new Product({
-//   //     product_id: faker.commerce.productName(),
-//   //     current_price: {
-//   //       value: faker.finance.amount(),
-//   //       currency_code: "USD"
-//   //       },
-//   //     });
-//   //   p.save();
-//   //   res.status(201).json(p);
-//   // },
-//
-//   getProduct: (res)=>{
-//     Product.find((err, product)=> {
-//       if (err) return res.status(500).send(err);
-//       res.json(product);
-//     })
-//   },
-//
-//   deleteProduct: (res, id)=>{
-//     Product.findByIdAndRemove(id, (err, product)=>{
-//       if(err) return res.status(500).send(err);
-//     })
-//     return res.status(200).json({message: `Product ${id} was successfully removed.`})
-//   }
-// }
