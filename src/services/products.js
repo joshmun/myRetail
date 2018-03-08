@@ -13,6 +13,14 @@ class ProductHelpers{
       return new Promise(function(resolve, reject){
           axios.get(`http://redsky.target.com/v2/pdp/tcin/${id}?excludes=taxonomy,price,promotion,bulk_ship,rating_and_review_reviews,rating_and_review_statistics,question_answer_statistics`)
           .then((response)=>{
+            if(response.data.product.item.length < 1){
+              reject(
+                {
+                  id: id,
+                  error: "Sorry, redsky didn't respond with product data with this id."
+                }
+              )
+            }
             productName = response.data.product.item.product_description.title
             resolve({
               'product_id': id,
@@ -25,8 +33,15 @@ class ProductHelpers{
     getProductPrice(productName){
       let productPrice;
       return new Promise(function(resolve, reject){
-        Product.findOne({ 'product_id': productName.product_id }, (err, product) => {
-          if (err) return err;
+        Product.find({ 'product_id': productName.product_id }, (err, product) => {
+          if (product.length < 1){
+            reject(
+              {
+                id: id,
+                error: 'Sorry, we could not find this product.'
+              }
+            )
+          }
           productPrice = product[0];
           productName['current_price'] = productPrice.current_price;
           resolve(productName)

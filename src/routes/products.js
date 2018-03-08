@@ -12,9 +12,13 @@ router.get('/:id', (req,res) => {
   productHelper.getProductName(res, req.params.id)
   .then((productName)=>{
     return productHelper.getProductPrice(productName)
+  }, (error)=>{
+    res.status(404).json(error);
   })
   .then((productData)=>{
     res.json(productData)
+  }, (error)=>{
+    res.status(404).json(error);
   })
 });
 
@@ -31,7 +35,7 @@ router.put('/:id', (req, res) => {
     res.status(200).json(updatedProduct);
     return productHelper.updateProductPrice(product)
   }, (error)=>{
-    res.status(400).json(error);
+    res.status(404).json(error);
   })
 })
 
