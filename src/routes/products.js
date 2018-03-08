@@ -1,5 +1,6 @@
 const router = require('express').Router();
-const products = require('../services/products');
+const ProductHelpers = require('../services/products');
+const productHelper = new ProductHelpers();
 
 // // GET all
 // router.get('/', (req,res) => {
@@ -8,7 +9,15 @@ const products = require('../services/products');
 
 //  GET /products/:id
 router.get('/:id', (req,res) => {
-  products.getProductById(res, req.params.id);
+  console.log("HIT THE ROUTE")
+  productHelper.getProductName(res, req.params.id)
+  .then((productName)=>{
+    // console.log(productName);
+    return productHelper.getProductPrice(productName)
+  })
+  .then((productData)=>{
+    res.json(productData)
+  })
 });
 
 // // POST creates new product

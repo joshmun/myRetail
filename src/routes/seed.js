@@ -13,6 +13,10 @@ router.get('/drop', (req, res) => {
   seed.drop(res);
 });
 
+router.get('/one', (req, res)=>{
+  seed.seedOne(res);
+})
+
 // // GET all
 // router.get('/product', (req,res) => {
 //   seed.getProduct(res);
