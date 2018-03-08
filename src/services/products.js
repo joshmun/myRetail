@@ -33,6 +33,51 @@ class ProductHelpers{
         });
       })
     }
+
+    putProductPrice(id, updatedPrice){
+      return new Promise(function(resolve, reject){
+        Product.findOneAndUpdate({ 'product_id': id}, { 'current_price': updatedPrice }, (err, product) =>{
+          if(err) {
+            console.log(err)
+            let message = {
+              id: id,
+              error: `Sorry, we could not find any product with id: ${id}.`
+            }
+            resolve(message);
+          }
+          else{
+            let message = {
+              id: id,
+              message: `Successfully updated price to ${updatedPrice.value}`
+            }
+            resolve(message);
+          }
+        })
+      })
+      // let message;
+      // let response = Product.findOneAndUpdate({ 'product_id': id}, { 'current_price': updatedPrice }, (err, product) =>{
+      //   if(err) {
+      //     console.log(err)
+      //     message = {
+      //       id: id,
+      //       error: `Sorry, we could not find any product with id: ${id}.`
+      //     }
+      //     return message;
+      //   }
+      //   else{
+      //     message = {
+      //       id: id,
+      //       message: `Successfully updated price to ${updatedPrice.value}`
+      //     }
+      //     console.log("hit this block")
+      //   }
+      //   console.log("ready to return?")
+      //   console.log(message)
+      //   return message
+      // });
+      // console.log(response)
+      // return response;
+    }
 }
 
 module.exports = ProductHelpers;

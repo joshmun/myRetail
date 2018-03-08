@@ -18,6 +18,18 @@ router.get('/:id', (req,res) => {
   })
 });
 
+// PUT /products/:id
+// Update pricing in local dropDatabase
+
+router.put('/:id', (req, res) => {
+  let id = req.params.id;
+  let updatedPrice = req.query;
+  productHelper.putProductPrice(id, updatedPrice)
+  .then((response)=>{
+    res.status(200).json(response);
+  })
+})
+
 // // POST creates new product
 // router.post('/', (req,res) => {
 //   products.postProduct(res);
