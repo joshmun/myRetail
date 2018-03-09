@@ -102,7 +102,7 @@ describe("Products Controller", function(){
 
   describe("#PUT /products/:id", ()=>{
     after(()=>{
-      chai.request(server).post('/products/13860428?value=43&currency_code=USD')
+      chai.request(server).put('/products/13860428').query({value:43, currency_code:'USD'});
     })
 
     it("returns status code 200", (done) => {
@@ -128,23 +128,12 @@ describe("Products Controller", function(){
     it("returns expected fail message on invalid id", (done) => {
       chai.request(server)
       //unhandled promise, product not defined in the PUT route
-      .put('/products/12345?value=42.42&currency_code=USD')
+      .put('/products/98765')
+      .query({value:42.42,currency_code:'USD'})
       .end((err, res) => {
-        console.log(res.body)
         expect(res.body.error).to.equal("Sorry, we could not find this product.")
         done()
       });
     });
   });
-
-  // describe("#DELETE /products", ()=>{
-  //   it("returns status code 200", (done)=>{
-  //     chai.request(server)
-  //     .delete(`/products/${postId}`)
-  //     .end((err, res)=>{
-  //       res.should.have.status(200);
-  //       done()
-  //     });
-  //   });
-  // });
 });
