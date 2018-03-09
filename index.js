@@ -1,6 +1,6 @@
 const express = require("express");
 const mongoose = require("mongoose");
-mongoose.connect(ENV["mongoURI"]);
+mongoose.connect(process.env.mongoURI);
 
 const app = express();
 
