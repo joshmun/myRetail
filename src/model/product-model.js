@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const { Schema } = mongoose;
 const ObjectId = Schema.ObjectId;
-const dbConnection = require('../../config/common').config();
+const dbConnection = require("../../config/common").config();
 mongoose.connect(dbConnection);
 
 const ProductSchema = new Schema({

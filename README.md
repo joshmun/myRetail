@@ -12,11 +12,7 @@ npm install
 ```
 
 ### Connecting to the Database
-Before you can:
-```
-npm run dev
-```
-This app requires a secret mongoURI to connect with the cloud-hosted database. Create an env.json file in the config folder and add in the mongoURI following this convention:
+Before you can run the app, this app requires a secret mongoURI to connect with the cloud-hosted database. Create an env.json file in the config folder and add in the mongoURI following this convention:
 ```
 {
   "development": {
@@ -45,7 +41,6 @@ The API follows RESTful convention based on the products resource. The API retur
 Retrieves and aggregates Product Data from local storage and external RedSky API.
 
 ```
-/
 /products
 /products/13860428
 ```

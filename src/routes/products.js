@@ -25,13 +25,12 @@ router.get("/:id", (req, res) => {
 });
 
 // PUT /products/:id
-// Update pricing in local dropDatabase
 router.put("/:id", (req, res) => {
   let id = req.params.id;
   let queryPrice = req.query;
   queryPrice.value = Number(queryPrice.value);
   let updatedPrice = queryPrice;
-  productHelper.putProductPrice(id, updatedPrice.value).then(
+  productHelper.updateProductPrice(id, updatedPrice.value).then(
     updatedProduct => {
       res.status(200).json(updatedProduct);
     },

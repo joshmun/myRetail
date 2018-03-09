@@ -5,7 +5,7 @@ mongoose.connect(dbConnection);
 
 const app = express();
 
-// routes
+// Route Resources
 const products = require("./src/routes/products");
 
 app.get("/status", (req, res) => {

@@ -1,15 +1,11 @@
 const mongoose = require("mongoose");
-const dbConnection = require('../../config/common').config();
-mongoose.connect(dbConnection);
-const db = mongoose.connection;
 const Product = require("../model/product-model");
-const faker = require("faker");
 const axios = require("axios");
 
 class ProductHelpers {
   getProductName(res, id) {
     let productName;
-    return new Promise(function(resolve, reject) {
+    return new Promise((resolve, reject) => {
       axios
         .get(
           `http://redsky.target.com/v2/pdp/tcin/${id}?excludes=taxonomy,price,promotion,bulk_ship,rating_and_review_reviews,rating_and_review_statistics,question_answer_statistics`
@@ -32,7 +28,7 @@ class ProductHelpers {
 
   getProductPrice(productName, id) {
     let productPrice;
-    return new Promise(function(resolve, reject) {
+    return new Promise((resolve, reject) => {
       Product.find({ product_id: productName.product_id }, (err, product) => {
         if (product.length < 1) {
           reject({
@@ -48,7 +44,7 @@ class ProductHelpers {
     });
   }
 
-  putProductPrice(id, updatedPrice) {
+  updateProductPrice(id, updatedPrice) {
     return new Promise(function(resolve, reject) {
       Product.find({ product_id: id }, (err, product) => {
         if (product.length < 1) {
@@ -60,11 +56,11 @@ class ProductHelpers {
           product = product[0];
           product.current_price.value = updatedPrice;
           product.save((err, updatedProduct) => {
-            if(err){
+            if (err) {
               reject({
                 id: id,
                 error: "Requested pricing update information was malformed."
-              })
+              });
             }
             resolve({
               id: id,
