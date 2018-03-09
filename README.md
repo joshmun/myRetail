@@ -9,9 +9,34 @@ https://mun-myretail.herokuapp.com/
 git clone https://github.com/joshmun/myRetail.git
 cd myRetail
 npm install
+```
+
+### Connecting to the Database
+Before you can:
+```
+npm run dev
+```
+This app requires a secret mongoURI to connect with the cloud-hosted database. Create an env.json file in the config folder and add in the mongoURI following this convention:
+```
+{
+  "development": {
+    "mongoURI": "your mongoURI login, password and link here"
+  }
+}
+
+```
+
+### Development
+Then:
+```
 npm run dev
 ```
 
+### Testing
+Kill all node processes, then:
+```
+npm test
+```
 
 ## PUT Request Example
 ```
