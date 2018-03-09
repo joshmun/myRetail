@@ -50,7 +50,7 @@ Retrieves and aggregates Product Data from local storage and external RedSky API
 /products/13860428
 ```
 
-#### PUT Routes
+### PUT Routes
 API was built assuming pure backend functionality. API receives product pricing updates via query strings.
 
 At this time, API only updates pricing value. Currency functionality soon to be implemented.
