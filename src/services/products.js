@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-mongoose.connect(ENV["mongoURI"]);
+mongoose.connect(process.env.mongoURI);
 const db = mongoose.connection;
 const Product = require("../model/product-model");
 const faker = require("faker");

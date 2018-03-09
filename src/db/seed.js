@@ -1,7 +1,5 @@
 const mongoose = require("mongoose");
-const common = require("../../config/common");
-const config = common.config();
-mongoose.connect(config.mongoURI);
+mongoose.connect(process.env.mongoURI);
 const db = mongoose.connection;
 const Product = require("../model/product-model");
 const faker = require("faker");
