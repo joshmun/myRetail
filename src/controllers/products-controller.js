@@ -1,8 +1,8 @@
-const Product = require('../model/product-model');
+const Product = require("../model/product-model");
 const ProductHelpers = require("../services/products");
 const productHelper = new ProductHelpers();
 
-exports.product_get = (req, res)=>{
+exports.product_get = (req, res) => {
   productHelper
     .getProductName(res, req.params.id)
     .then(
@@ -21,9 +21,9 @@ exports.product_get = (req, res)=>{
         res.status(404).send(error);
       }
     );
-}
+};
 
-exports.product_update_put = (req, res)=>{
+exports.product_update_put = (req, res) => {
   let id = req.params.id;
   let queryPrice = req.query;
   queryPrice.value = Number(queryPrice.value);
@@ -36,4 +36,4 @@ exports.product_update_put = (req, res)=>{
       res.status(404).json(error);
     }
   );
-}
+};

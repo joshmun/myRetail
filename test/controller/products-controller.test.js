@@ -54,7 +54,7 @@ describe("Products Controller", function() {
           });
       });
 
-      it("returns status code 404 if id found by db, but not by Axios", function(done) {
+      it("returns status code 404 if id found not found by Axios", function(done) {
         chai
           .request(server)
           .get(`/products/${myId}`)
@@ -64,7 +64,7 @@ describe("Products Controller", function() {
           });
       });
 
-      it("returns expected error message if id found by db, but not by Axios", function(done) {
+      it("returns expected error message if id not found by Axios", function(done) {
         chai
           .request(server)
           .get(`/products/${myId}`)
@@ -75,8 +75,6 @@ describe("Products Controller", function() {
             done();
           });
       });
-
-
     });
   });
 

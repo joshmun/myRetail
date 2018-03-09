@@ -1,4 +1,3 @@
-
 const Product = require("../../src/model/product-model");
 const expect = require("chai").expect;
 describe("Product", function() {

@@ -1,7 +1,7 @@
 const router = require("express").Router();
 
 // Product Resources
-const product_controller = require('../controllers/products-controller');
+const product_controller = require("../controllers/products-controller");
 
 //  GET /products/:id
 router.get("/:id", product_controller.product_get);
