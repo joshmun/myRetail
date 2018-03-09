@@ -1,6 +1,5 @@
 const express = require("express");
 const mongoose = require("mongoose");
-const ENV = require('./config/env.json');
 const dbConnection = require('./config/common').config();
 mongoose.connect(dbConnection);
 
