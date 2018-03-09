@@ -101,11 +101,17 @@ describe("Products Controller", function(){
   });
 
   describe("#PUT /products/:id", ()=>{
-    after(()=>{
-      chai.request(server).put('/products/13860428').query({value:43, currency_code:'USD'});
+
+    after((done)=>{
+      chai.request(server)
+        .put('/products/13860428?value=43&currency_code=USD')
+        .end((err, res)=>{
+          done()
+        });
     })
 
     it("returns status code 200", (done) => {
+      console.log("first PUT");
       chai.request(server)
       .put('/products/13860428?value=42.42&currency_code=USD')
       .end((err, res) => {
@@ -115,6 +121,7 @@ describe("Products Controller", function(){
     });
 
     it("returns expected success message on valid id", (done) => {
+      console.log("second PUT");
       chai.request(server)
       .put('/products/13860428?value=42.42&currency_code=USD')
       .end((err, res) => {
@@ -124,6 +131,7 @@ describe("Products Controller", function(){
     });
 
     it("returns expected fail message on invalid id", (done) => {
+      console.log("third PUT");
       chai.request(server)
       .put('/products/98765')
       .query({value:42.42,currency_code:'USD'})
