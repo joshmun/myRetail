@@ -101,8 +101,13 @@ describe("Products Controller", function(){
   });
 
   describe("#PUT /products/:id", ()=>{
-    after(()=>{
-      chai.request(server).put('/products/13860428').query({value:43, currency_code:'USD'});
+
+    after((done)=>{
+      chai.request(server)
+        .put('/products/13860428?value=43&currency_code=USD')
+        .end((err, res)=>{
+          done()
+        });
     })
 
     it("returns status code 200", (done) => {
