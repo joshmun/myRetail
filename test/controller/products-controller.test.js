@@ -76,27 +76,7 @@ describe("Products Controller", function() {
           });
       });
 
-      it("returns status code 404 if id found by Axios, but not in db", function(done) {
-        chai
-          .request(server)
-          .get(`/products/16696652`)
-          .end((err, res) => {
-            res.should.have.status(404);
-            done();
-          });
-      });
 
-      it("returns expected error message if not found in db, but found by axios", function(done) {
-        chai
-          .request(server)
-          .get(`/products/16696652`)
-          .end((err, res) => {
-            expect(res.body.error).to.equal(
-              "Sorry, we could not find this product."
-            );
-            done();
-          });
-      });
     });
   });
 
