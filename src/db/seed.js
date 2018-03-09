@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
-mongoose.connect(process.env.mongoURI);
+const dbConnection = require('../../config/common').config();
+mongoose.connect(dbConnection);
 const db = mongoose.connection;
 const Product = require("../model/product-model");
 const faker = require("faker");

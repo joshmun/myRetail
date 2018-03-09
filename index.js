@@ -1,6 +1,8 @@
 const express = require("express");
 const mongoose = require("mongoose");
-mongoose.connect(process.env.mongoURI);
+const ENV = require('./config/env.json');
+const dbConnection = require('./config/common').config();
+mongoose.connect(dbConnection);
 
 const app = express();
 
