@@ -1,8 +1,8 @@
 const mongoose = require("mongoose");
 const { Schema } = mongoose;
 const ObjectId = Schema.ObjectId;
-const dbConnection = require("../../config/common").config();
-mongoose.connect(dbConnection);
+// const dbConnection = require("../../config/common").config();
+// mongoose.connect(dbConnection);
 
 const ProductSchema = new Schema({
   product_id: { type: Number, unique: true, required: true },
