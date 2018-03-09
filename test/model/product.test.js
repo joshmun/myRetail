@@ -1,5 +1,4 @@
-const mongoose = require("mongoose");
-const db = mongoose.connection;
+
 const Product = require("../../src/model/product-model");
 const expect = require("chai").expect;
 describe("Product", function() {

@@ -1,14 +1,9 @@
-const mongoose = require("mongoose");
-const { Schema } = mongoose;
-const ObjectId = Schema.ObjectId;
 let chai = require("chai");
 let chaiHttp = require("chai-http");
 const expect = chai.expect;
 let should = chai.should();
-const products = require("../../src/routes/products");
 const server = require("../../index.js");
 const Product = require("../../src/model/product-model");
-const db = mongoose.connection;
 
 chai.use(chaiHttp);
 
