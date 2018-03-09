@@ -7,7 +7,6 @@ const app = express();
 
 // routes
 const products = require("./src/routes/products");
-const seed = require("./src/routes/seed");
 
 app.get("/", (req, res) => {
   res.send({ json: "data" });
