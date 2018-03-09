@@ -63,6 +63,17 @@ At this time, API only updates pricing value. Currency functionality soon to be 
   - Mocha/Chai
 - Git/GitHub
 - Postman
+- Heroku
 - Agile/Kanban
 
 ![Trello Board](./public/kanban.png)
+
+## Notes
+Heroku Logs:
+```
+heroku logs --tail
+```
+Deploy to Heroku:
+```
+git push heroku master
+```
