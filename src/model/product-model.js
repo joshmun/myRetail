@@ -1,10 +1,7 @@
 const mongoose = require("mongoose");
 const { Schema } = mongoose;
 const ObjectId = Schema.ObjectId;
-const common = require("../../config/common");
-const config = common.config();
-
-mongoose.connect(config.mongoURI);
+mongoose.connect(ENV["mongoURI"]);
 
 const ProductSchema = new Schema({
   product_id: { type: Number, unique: true, required: true },
