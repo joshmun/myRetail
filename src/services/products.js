@@ -63,7 +63,6 @@ class ProductHelpers{
             product = product[0];
             product.current_price = updatedPrice;
             product.save((err, updatedProduct)=>{
-              // resolve(updatedProduct);
               resolve({
                 id: updatedProduct.product_id,
                 message: "Succesfully updated!"
