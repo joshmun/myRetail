@@ -21,16 +21,16 @@
   "homepage": "https://github.com/joshmun/myRetail#readme",
   "dependencies": {
     "axios": "^0.18.0",
-    "chai-http": "^3.0.0",
     "concurrently": "^3.5.1",
     "express": "^4.16.2",
-    "faker": "^4.1.0",
     "mongodb": "^3.0.3",
     "mongoose": "^5.0.8",
     "nodemon": "^1.17.1"
   },
   "devDependencies": {
     "chai": "*",
-    "mocha": "*"
+    "mocha": "*",
+    "faker": "^4.1.0",
+    "chai-http": "^3.0.0"
   }
 }
