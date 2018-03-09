@@ -22,7 +22,7 @@ class ProductHelpers{
           .catch((error)=>{
             reject({
               id: id,
-              error: `Sorry, redsky didn't respond with product data with this id.`
+              error: `Sorry, redsky did not respond with product data with this id.`
             })
           })
         })
@@ -52,11 +52,11 @@ class ProductHelpers{
       return new Promise(function(resolve, reject){
         Product.find({ product_id: id}, (err, product)=>{
           if (product.length < 1){
-            reject(Error(
+            reject(
               {
                   id: id,
                   error: 'Sorry, we could not find this product.'
-              })
+              }
             )
           }
           else{
@@ -65,7 +65,7 @@ class ProductHelpers{
             product.save((err, updatedProduct)=>{
               resolve({
                 id: updatedProduct.product_id,
-                message: "Succesfully updated!"
+                message: "Successfully updated!"
               })
             })
           }

@@ -27,7 +27,6 @@ router.put('/:id', (req, res) => {
   productHelper.putProductPrice(id, updatedPrice)
   .then((updatedProduct)=>{
     res.status(200).json(updatedProduct);
-    return productHelper.updateProductPrice(product)
   }, (error)=>{
     res.status(404).json(error);
   })
