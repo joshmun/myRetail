@@ -14,7 +14,6 @@ app.get("/", (req, res) => {
 });
 
 app.use("/products", products);
-app.use("/seed", seed);
 
 const PORT = process.env.PORT || 5000;
 const server = app.listen(PORT);
