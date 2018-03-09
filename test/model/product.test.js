@@ -5,7 +5,7 @@ const expect = require('chai').expect;
 describe('Product', function() {
   it('should be valid with correct input', function(done){
     const p = new Product({
-                name: 'Movie',
+                product_id: 510314,
                 current_price: {
                   value: 13.49,
                   currency_code: 'USD'
@@ -17,27 +17,27 @@ describe('Product', function() {
     done();
   });
 
-  describe('#name', function() {
-    it('should be valid when name is Movie', function(done){
-      const p = new Product({ name: 'Movie' });
+  describe('#product_id', function() {
+    it('should be valid when product_id is 3146694', function(done){
+      const p = new Product({ product_id: 3146694 });
       p.validate(function(err) {
-        expect(err.errors.name).to.not.exist;
+        expect(err.errors.product_id).to.not.exist;
         done();
       });
     });
 
-    it('should be invalid if name is empty', function(done){
+    it('should be invalid if product_id is empty', function(done){
       const p = new Product();
       p.validate(function(err) {
-        expect(err.errors.name).to.exist;
+        expect(err.errors.product_id).to.exist;
         done();
       });
     });
 
-    it('should be invalid when name is numbers 123', function(done){
-      const p = new Product({ name: 123 });
+    it('should be invalid when product_id is string onetwo', function(done){
+      const p = new Product({ product_id: 'onetwo' });
       p.validate(function(err) {
-        expect(err.errors.name).to.exist;
+        expect(err.errors.product_id).to.exist;
       });
       done();
     });

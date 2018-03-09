@@ -107,7 +107,6 @@ describe("Products Controller", function(){
 
     it("returns status code 200", (done) => {
       chai.request(server)
-      //unhandled promise, product not defined in the PUT route
       .put('/products/13860428?value=42.42&currency_code=USD')
       .end((err, res) => {
         res.should.have.status(200);
@@ -117,7 +116,6 @@ describe("Products Controller", function(){
 
     it("returns expected success message on valid id", (done) => {
       chai.request(server)
-      //unhandled promise, product not defined in the PUT route
       .put('/products/13860428?value=42.42&currency_code=USD')
       .end((err, res) => {
         expect(res.body.message).to.equal("Successfully updated!")
@@ -127,7 +125,6 @@ describe("Products Controller", function(){
 
     it("returns expected fail message on invalid id", (done) => {
       chai.request(server)
-      //unhandled promise, product not defined in the PUT route
       .put('/products/98765')
       .query({value:42.42,currency_code:'USD'})
       .end((err, res) => {
