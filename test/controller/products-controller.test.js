@@ -13,106 +13,138 @@ const db = mongoose.connection
 chai.use(chaiHttp);
 
 describe("Products Controller", function(){
-  let postId;
-  describe("#GET requests", function(){
-    let myId;
+  let productId = 12345;
+  let myId;
+
+  after(()=>{
+    Product.findByIdAndRemove(myId).exec();
+  });
+
+  describe("#GET when product exists in Redsky and MongoDb", function(){
+
     before(()=>{
       const p = new Product({
-        name: "movie",
+        product_id: productId,
         current_price: {
           value: 123,
           currency_code: "USD"
         }
       })
-      myId = p.id;
+      myId = p.id
       p.save()
     });
 
-    after(()=>{
-      Product.findByIdAndRemove(myId).exec();
-    });
 
-    describe("/products", function(){
-      it("returns status code 200", function(done){
-        chai.request(server)
-        .get('/products')
-        .end((err, res) => {
-          res.should.have.status(200);
-          done();
-        });
-      });
-
-      it("returns a collection of products");
-    });
 
     describe("/products/:id", function(){
       it("returns status code 200", function(done){
         chai.request(server)
-          .get(`/products/${myId}`)
+          .get(`/products/${13860428}`)
           .end((err, res) => {
             res.should.have.status(200);
             done();
           });
       });
 
-      it("returns status code 404 if ID not found", function(done){
+      it("returns expected JSON product data", (done) => {
         chai.request(server)
-          .get('/products/500010100001003939320')
+        .get(`/products/${13860428}`)
+        .end((err, res) => {
+          res.should.be.json;
+          res.body.should.be.a('object');
+          res.body.should.have.property('product_id');
+          res.body.should.have.property('current_price');
+          expect(res.body.current_price).to.have.property('value');
+          expect(res.body.current_price).to.have.property('currency_code');
+          done();
+        });
+      });
+
+      it("returns status code 404 if id found by db, but not by Axios", function(done){
+        chai.request(server)
+          .get(`/products/${myId}`)
           .end((err, res) => {
             res.should.have.status(404);
             done();
           });
       });
 
-      it("returns JSON product data", (done) => {
+      it("returns expected error message if id found by db, but not by Axios", function(done){
         chai.request(server)
-        .get(`/products/${myId}`)
-        .end((err, res) => {
-          res.body.should.be.a('object');
-          done();
-        });
-      });
+          .get(`/products/${myId}`)
+          .end((err, res)=>{
+            expect(res.body.error).to.equal("Sorry, redsky did not respond with product data with this id.")
+            done()
+          })
+      })
 
-      it("returns a Product object", (done) => {
+      it("returns status code 404 if id found by Axios, but not in db", function(done){
         chai.request(server)
-        .get(`/products/${myId}`)
-        .end((err, res) => {
-          res.body.should.have.property('name');
-          res.body.should.have.property('current_price');
-          expect(res.body.current_price).to.have.property('value');
-          expect(res.body.current_price).to.have.property('currency_code');
-          res.body.should.have.property('createdAt');
-          done();
-        });
+          .get(`/products/16696652`)
+          .end((err, res) => {
+            res.should.have.status(404);
+            done();
+          });
       });
-    });
-  });
 
-  describe("#POST /products", ()=>{
-    it("returns status code 201", (done) => {
-      chai.request(server)
-      .post('/products')
-      .end((err, res) => {
-        postId = res.body._id
-        res.should.have.status(201);
-        done()
+      it("returns expected error message if not found in db, but found by axios", function(done){
+        chai.request(server)
+          .get(`/products/16696652`)
+          .end((err, res) => {
+            expect(res.body.error).to.equal("Sorry, we could not find this product.")
+            done();
+          });
       });
-    });
-  });
 
-  describe("#DELETE /products", ()=>{
-    it("returns status code 200", (done)=>{
-      chai.request(server)
-      .delete(`/products/${postId}`)
-      .end((err, res)=>{
-        res.should.have.status(200);
-        done()
-      });
+
     });
   });
 
   describe("#PUT /products/:id", ()=>{
-    it("returns status code 200"
-    );
+    after(()=>{
+      chai.request(server).post('/products/13860428?value=43&currency_code=USD')
+    })
+
+    it("returns status code 200", (done) => {
+      chai.request(server)
+      //unhandled promise, product not defined in the PUT route
+      .put('/products/13860428?value=42.42&currency_code=USD')
+      .end((err, res) => {
+        res.should.have.status(200);
+        done()
+      });
+    });
+
+    it("returns expected success message on valid id", (done) => {
+      chai.request(server)
+      //unhandled promise, product not defined in the PUT route
+      .put('/products/13860428?value=42.42&currency_code=USD')
+      .end((err, res) => {
+        expect(res.body.message).to.equal("Successfully updated!")
+        done()
+      });
+    });
+
+    it("returns expected fail message on invalid id", (done) => {
+      chai.request(server)
+      //unhandled promise, product not defined in the PUT route
+      .put('/products/12345?value=42.42&currency_code=USD')
+      .end((err, res) => {
+        console.log(res.body)
+        expect(res.body.error).to.equal("Sorry, we could not find this product.")
+        done()
+      });
+    });
   });
+
+  // describe("#DELETE /products", ()=>{
+  //   it("returns status code 200", (done)=>{
+  //     chai.request(server)
+  //     .delete(`/products/${postId}`)
+  //     .end((err, res)=>{
+  //       res.should.have.status(200);
+  //       done()
+  //     });
+  //   });
+  // });
 });
