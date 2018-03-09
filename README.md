@@ -27,7 +27,7 @@ This app requires a secret mongoURI to connect with the cloud-hosted database. C
 ```
 
 ### Development
-App runs on localhost:5000/
+App runs on **localhost:5000**
 ```
 npm run dev
 ```
@@ -42,6 +42,8 @@ npm test
 The API follows RESTful convention based on the products resource. The API returns aggregated product data given a product ID, and can accept a PUT request to update pricing information.
 
 ### GET Routes
+Retrieves and aggregates Product Data from local storage and external RedSky API.
+
 ```
 /
 /products
@@ -56,3 +58,16 @@ At this time, API only updates pricing value. Currency functionality soon to be 
 ```
 /products/13860428?value=44
 ```
+
+## Technologies & Methodologies
+- MongoDb
+  - hosted on mLab
+- Express.js
+- Node.js
+- BDD/TDD
+  - Mocha/Chai
+- Git/GitHub
+- Postman
+- Agile/Kanban
+
+![Trello Board](./public/kanban.png)
