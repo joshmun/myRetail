@@ -27,7 +27,7 @@ This app requires a secret mongoURI to connect with the cloud-hosted database. C
 ```
 
 ### Development
-Then:
+App runs on localhost:5000/
 ```
 npm run dev
 ```
@@ -38,7 +38,21 @@ Kill all node processes, then:
 npm test
 ```
 
-## PUT Request Example
+## Routes
+The API follows RESTful convention based on the products resource. The API returns aggregated product data given a product ID, and can accept a PUT request to update pricing information.
+
+### GET Routes
 ```
-http://localhost:5000/products/13860428?value=42.42&currency_code=USD
+/
+/products
+/products/13860428
+```
+
+#### PUT Routes
+API was built assuming pure backend functionality. API receives product pricing updates via query strings.
+
+At this time, API only updates pricing value. Currency functionality soon to be implemented.
+
+```
+/products/13860428?value=44
 ```

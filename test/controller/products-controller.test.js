@@ -109,7 +109,7 @@ describe("Products Controller", function() {
     after(done => {
       chai
         .request(server)
-        .put("/products/13860428?value=43&currency_code=USD")
+        .put("/products/13860428?value=43")
         .end((err, res) => {
           done();
         });
@@ -118,7 +118,7 @@ describe("Products Controller", function() {
     it("returns status code 200", done => {
       chai
         .request(server)
-        .put("/products/13860428?value=42.42&currency_code=USD")
+        .put("/products/13860428?value=42.42")
         .end((err, res) => {
           res.should.have.status(200);
           done();
@@ -128,7 +128,7 @@ describe("Products Controller", function() {
     it("returns expected success message on valid id", done => {
       chai
         .request(server)
-        .put("/products/13860428?value=42.42&currency_code=USD")
+        .put("/products/13860428?value=42.42")
         .end((err, res) => {
           expect(res.body.message).to.equal("Successfully updated!");
           done();
@@ -139,10 +139,23 @@ describe("Products Controller", function() {
       chai
         .request(server)
         .put("/products/98765")
-        .query({ value: 42.42, currency_code: "USD" })
+        .query({ value: 42.42 })
         .end((err, res) => {
           expect(res.body.error).to.equal(
             "Sorry, we could not find this product."
+          );
+          done();
+        });
+    });
+
+    it("returns expected fail message on invalid pricing information", done => {
+      chai
+        .request(server)
+        .put("/products/13860428")
+        .query({ value: "onetwothree" })
+        .end((err, res) => {
+          expect(res.body.error).to.equal(
+            "Requested pricing update information was malformed."
           );
           done();
         });

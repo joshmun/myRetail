@@ -31,7 +31,7 @@ router.put("/:id", (req, res) => {
   let queryPrice = req.query;
   queryPrice.value = Number(queryPrice.value);
   let updatedPrice = queryPrice;
-  productHelper.putProductPrice(id, updatedPrice).then(
+  productHelper.putProductPrice(id, updatedPrice.value).then(
     updatedProduct => {
       res.status(200).json(updatedProduct);
     },

@@ -58,10 +58,16 @@ class ProductHelpers {
           });
         } else {
           product = product[0];
-          product.current_price = updatedPrice;
+          product.current_price.value = updatedPrice;
           product.save((err, updatedProduct) => {
+            if(err){
+              reject({
+                id: id,
+                error: "Requested pricing update information was malformed."
+              })
+            }
             resolve({
-              id: updatedProduct.product_id,
+              id: id,
               message: "Successfully updated!"
             });
           });
